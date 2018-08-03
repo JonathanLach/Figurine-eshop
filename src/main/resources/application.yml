@@ -1,13 +1,12 @@
 server:
   port: 8082
-  contextPath: /dev
 spring:
   datasource:
     password:
     url: jdbc:mysql://localhost:3306/figurinedb?user=root
   jpa:
     database: MYSQL
-    #hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
     show-sql: true
     properties:
       hibernate:

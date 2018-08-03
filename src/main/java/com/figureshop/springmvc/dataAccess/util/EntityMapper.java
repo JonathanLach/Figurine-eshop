@@ -1,11 +1,16 @@
 package com.figureshop.springmvc.dataAccess.util;
 
+import ch.qos.logback.core.encoder.ByteArrayUtil;
 import com.figureshop.springmvc.dataAccess.entity.*;
 import com.figureshop.springmvc.model.*;
+import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
+import sun.misc.BASE64Encoder;
 
 import java.util.List;
 
@@ -19,8 +24,8 @@ public class EntityMapper {
         classMapBidirectional(UserEntity.class, User.class);
         classMapBidirectional(TranslationEntity.class, Translation.class);
         classMapBidirectional(PurchaseEntity.class, Purchase.class);
-        classMapBidirectional(ProductEntity.class, Product.class);
         classMapBidirectional(LanguageEntity.class, Language.class);
+        classMapBidirectional(ProductEntity.class, Product.class);
     }
 
     private void classMapBidirectional(Class<?> c1, Class<?> c2) {
@@ -44,6 +49,10 @@ public class EntityMapper {
         return mapper.map(translation, TranslationEntity.class);
     }
 
+    public List<Translation> convertTranslationEntityListToModel(List<TranslationEntity> translations) {
+        return mapper.mapAsList(translations, Translation.class);
+    }
+
     public Purchase convertPurchaseEntityToModel(PurchaseEntity purchase) {
         return mapper.map(purchase, Purchase.class);
     }
@@ -53,7 +62,12 @@ public class EntityMapper {
     }
 
     public Product convertProductEntityToModel(ProductEntity product) {
-        return mapper.map(product, Product.class);
+        Product mappedProduct =  mapper.map(product, Product.class);
+        if (product.getPicture() != null) {
+            String base64picture = new BASE64Encoder().encode(ArrayUtils.toPrimitive(product.getPicture()));
+            mappedProduct.setBase64Picture(base64picture);
+        }
+        return mappedProduct;
     }
 
     public ProductEntity convertProductModelToEntity(Product product) {
@@ -61,7 +75,14 @@ public class EntityMapper {
     }
 
     public List<Product> convertProductEntityListToModel(List<ProductEntity> products) {
-        return mapper.mapAsList(products, Product.class);
+        List<Product> mappedProducts =  mapper.mapAsList(products, Product.class);
+        mappedProducts.forEach(p -> {
+            if (p.getPicture() != null) {
+                String base64picture = new BASE64Encoder().encode(ArrayUtils.toPrimitive(p.getPicture()));
+                p.setBase64Picture(base64picture);
+            }
+        });
+        return mappedProducts;
     }
 
     public Language convertLanguageEntityToModel(LanguageEntity language) {

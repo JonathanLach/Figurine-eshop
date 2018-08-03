@@ -1,45 +1,76 @@
 package com.figureshop.springmvc.model;
 
+import com.figureshop.springmvc.constants.RegexConstants;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 public class User {
     private Long id;
 
+    @NotNull
+    @NotBlank
     private String username;
 
+    @NotNull
+    @NotBlank
+    @Size(min = 5, max = 12)
     private String password;
 
+    @NotNull
+    @NotBlank
     private String firstName;
 
+    @NotNull
+    @NotBlank
     private String lastName;
 
+    @NotNull
+    @NotBlank
+    @Email
     private String mail;
 
-    private Date registerDate;
+    private Date registerDate = new Date();
 
+    @Pattern(regexp = RegexConstants.ONLY_DIGITS)
+    @NotBlank
+    @NotNull
     private String phoneNumber;
 
     private Boolean isSubNewLetters;
 
+    @Pattern(regexp = RegexConstants.ONLY_POSITIVE_NUMBERS)
+    @NotBlank
+    @NotNull
     private String streetNumber;
 
+    @NotBlank
+    @NotNull
     private String streetName;
 
+    @NotBlank
+    @NotNull
     private String postalCode;
 
+    @NotBlank
+    @NotNull
     private String locality;
 
+    @NotBlank
+    @NotNull
     private String country;
-
-    private String authorities;
-
-    private Boolean accountNonExpired;
-
-    private Boolean accountNonLocked;
-
-    private Boolean credentialsNonExpired;
-
-    private Boolean enabled;
 
     public Long getId() {
         return id;
@@ -49,16 +80,8 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -105,11 +128,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getSubNewLetters() {
+    public Boolean getIsSubNewLetters() {
         return isSubNewLetters;
     }
 
-    public void setSubNewLetters(Boolean subNewLetters) {
+    public void setIsSubNewLetters(Boolean subNewLetters) {
         isSubNewLetters = subNewLetters;
     }
 
@@ -153,43 +176,12 @@ public class User {
         this.country = country;
     }
 
-    public String getAuthorities() {
-        return authorities;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAuthorities(String authorities) {
-        this.authorities = authorities;
+    public String getUsername() {
+        return username;
     }
 
-    public Boolean getAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    public void setAccountNonExpired(Boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public Boolean getAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    public void setAccountNonLocked(Boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public Boolean getCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
 }

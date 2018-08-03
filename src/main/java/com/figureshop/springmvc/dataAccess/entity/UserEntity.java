@@ -1,6 +1,10 @@
 package com.figureshop.springmvc.dataAccess.entity;
 
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +16,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 @Entity
 @Table(name = "user")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -74,7 +78,17 @@ public class UserEntity {
     @OneToMany(mappedBy = "buyer")
     private List<PurchaseEntity> purchases;
 
-    /*public Collection<GrantedAuthority> getAuthorities() {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         if(!isEmpty(authorities)) {
@@ -88,30 +102,43 @@ public class UserEntity {
         }
 
         return grantedAuthorities;
-    }*/
+    }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
 
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
 
+    @Override
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
 
+    @Override
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
 
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setAuthorities(String authorities) {
@@ -148,23 +175,6 @@ public class UserEntity {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -207,11 +217,11 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getSubNewLetters() {
+    public Boolean getIsSubNewLetters() {
         return isSubNewLetters;
     }
 
-    public void setSubNewLetters(Boolean subNewLetters) {
+    public void setIsSubNewLetters(Boolean subNewLetters) {
         isSubNewLetters = subNewLetters;
     }
 

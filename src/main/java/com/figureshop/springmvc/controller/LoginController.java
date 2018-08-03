@@ -1,22 +1,24 @@
 package com.figureshop.springmvc.controller;
 
-import com.figureshop.springmvc.business.ProductManager;
+import com.figureshop.springmvc.model.User;
+import com.figureshop.springmvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@RequestMapping(value = "/login")
 @Controller
-@RequestMapping(value="/")
-public class WelcomeController {
+public class LoginController {
 
     @Autowired
-    private ProductManager productManager;
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String home(Model model) {
-        model.addAttribute("products", productManager.getAllProducts());
-        return "welcome";
+        model.addAttribute("user", new User());
+        return "integrated:login";
     }
+
 }

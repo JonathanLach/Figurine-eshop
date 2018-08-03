@@ -1,7 +1,5 @@
 package com.figureshop.springmvc.dataAccess.entity;
 
-import com.figureshop.springmvc.model.Translation;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,17 +13,14 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product")
     private List<TranslationEntity> translations;
 
-    @Column(nullable = false)
-    private Integer availableQuantity;
-
     private String description;
 
     @Lob
     @Column(nullable = false)
     private Byte[] picture;
 
-    @Column(nullable = false)
-    private Double exclTaxPrice;
+    @Column(name = "excl_tax_price", nullable = false)
+    private Double price;
 
     @OneToMany(mappedBy = "productBought")
     private List<PurchaseEntity> purchases;
@@ -36,14 +31,6 @@ public class ProductEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getAvailableQuantity() {
-        return availableQuantity;
-    }
-
-    public void setAvailableQuantity(Integer availableQuantity) {
-        this.availableQuantity = availableQuantity;
     }
 
     public String getDescription() {
@@ -62,11 +49,27 @@ public class ProductEntity {
         this.picture = picture;
     }
 
-    public Double getExclTaxPrice() {
-        return exclTaxPrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setExclTaxPrice(Double exclTaxPrice) {
-        this.exclTaxPrice = exclTaxPrice;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<TranslationEntity> getTranslations() {
+        return translations;
+    }
+
+    public void setTranslations(List<TranslationEntity> translations) {
+        this.translations = translations;
+    }
+
+    public List<PurchaseEntity> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<PurchaseEntity> purchases) {
+        this.purchases = purchases;
     }
 }
