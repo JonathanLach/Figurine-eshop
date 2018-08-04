@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Electro - HTML Ecommerce Template</title>
+		<title>Imagination Dream</title>
 
  		<!-- Google font -->
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -82,7 +82,7 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-5">
 							<div class="header-search">
-								<form action="/search">
+								<form action="/">
 								    <spring:message code="placeholder.searchName" var="i18nSearchName" />
 									<input class="input" name="name" placeholder="${i18nSearchName}">
 									<button class="search-btn"><spring:message code="label.search"/></button>
@@ -96,44 +96,11 @@
 							<div class="header-ctn">
 								<!-- Cart -->
 								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a href="/cart">
 										<i class="fa fa-shopping-cart"></i>
 										<span><spring:message code="label.yourCart"/></span>
-										<div class="qty" id="nbInCart">3</div>
+										<div class="qty" id="nbInCart">0</div>
 									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="/resources/img/product01.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="/resources/img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="#"><spring:message code="label.viewCart"/></a>
-											<a href="#"><spring:message code="label.checkout"/>  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
 								</div>
 								<!-- /Cart -->
 
@@ -202,8 +169,8 @@
 							<div class="footer">
 								<h3 class="footer-title"><spring:message code="label.aboutUs"/></h3>
 								<ul class="footer-links">
-									<li><a href="#"><i class="fa fa-phone"></i>+3276/06.46.15</a></li>
-									<li><a href="#"><i class="fa fa-envelope-o"></i>jonathanlachapellee@gmail.com</a></li>
+									<li><i class="fa fa-phone"></i>+32476/06.46.13</li>
+									<li><i class="fa fa-envelope-o"></i>infoimaginationdream@contact.com</li>
 								</ul>
 							</div>
 						</div>
@@ -214,7 +181,7 @@
 							<div class="footer">
 								<h3 class="footer-title"><spring:message code="label.service"/></h3>
 								<ul class="footer-links">
-									<li><a href="#"><spring:message code="label.viewCart"/></a></li>
+									<li><a href="/cart"><spring:message code="label.viewCart"/></a></li>
 								</ul>
 							</div>
 						</div>

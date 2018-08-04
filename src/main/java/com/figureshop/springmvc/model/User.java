@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.List;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
-public class User {
+public class User implements Serializable {
     private Long id;
 
     @NotNull
@@ -51,7 +52,7 @@ public class User {
 
     private Boolean isSubNewLetters;
 
-    @Pattern(regexp = RegexConstants.ONLY_POSITIVE_NUMBERS)
+    @Pattern(regexp = RegexConstants.ONLY_POSITIVE_NUMBERS, message = "Pattern.user.streetNumber")
     @NotBlank
     @NotNull
     private String streetNumber;

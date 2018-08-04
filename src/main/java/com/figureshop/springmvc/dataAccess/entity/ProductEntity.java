@@ -1,6 +1,7 @@
 package com.figureshop.springmvc.dataAccess.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class ProductEntity {
     private Byte[] picture;
 
     @Column(name = "excl_tax_price", nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "productBought")
     private List<PurchaseEntity> purchases;
@@ -49,11 +50,11 @@ public class ProductEntity {
         this.picture = picture;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -12,6 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Encoder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component

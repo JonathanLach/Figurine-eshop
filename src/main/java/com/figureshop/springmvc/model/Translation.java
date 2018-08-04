@@ -1,6 +1,8 @@
 package com.figureshop.springmvc.model;
 
-public class Translation {
+import java.io.Serializable;
+
+public class Translation implements Serializable {
     private Long id;
 
     private String translation;

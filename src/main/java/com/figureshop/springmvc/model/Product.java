@@ -4,9 +4,11 @@ import com.figureshop.springmvc.dataAccess.entity.TranslationEntity;
 import org.apache.commons.lang3.ArrayUtils;
 import sun.misc.BASE64Encoder;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
     private Long id;
 
     private List<TranslationEntity> translations;
@@ -17,7 +19,7 @@ public class Product {
 
     private String base64Picture;
 
-    private Double price;
+    private BigDecimal price;
 
     public Long getId() {
         return id;
@@ -35,11 +37,11 @@ public class Product {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

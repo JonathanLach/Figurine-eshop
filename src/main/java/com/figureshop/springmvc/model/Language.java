@@ -1,6 +1,8 @@
 package com.figureshop.springmvc.model;
 
-public class Language {
+import java.io.Serializable;
+
+public class Language implements Serializable {
     private Long id;
 
     private String name;

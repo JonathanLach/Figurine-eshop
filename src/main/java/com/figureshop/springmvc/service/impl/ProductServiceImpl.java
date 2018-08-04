@@ -8,11 +8,13 @@ import com.figureshop.springmvc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private ProductDAO productDAO;
 
@@ -21,8 +23,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void setProductWithRightTVAPrice(Product p) {
-        Double tvaAdditionalValue = PricingConstants.TVA_RATE * p.getPrice();
-        p.setPrice(p.getPrice() + tvaAdditionalValue);
+        BigDecimal tvaAdditionalValue = p.getPrice().multiply(new BigDecimal(PricingConstants.TVA_RATE));
+        p.setPrice(p.getPrice().add(tvaAdditionalValue));
+        p.setPrice(p.getPrice().setScale(PricingConstants.PRICE_SCALE, RoundingMode.HALF_UP));
     }
 
     @Override
@@ -32,11 +35,8 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    @Override
-    public List<Translation> searchProductsByName(String searchTerm) {
-        List<Translation> translations = productDAO.searchProductsByName(searchTerm);
-        translations.forEach(t -> setProductWithRightTVAPrice(t.getProduct()));
-        return translations;
+    public List<Product> searchProductsByName(String name) {
+        return productDAO.getProductsByName(name);
     }
 
     @Override

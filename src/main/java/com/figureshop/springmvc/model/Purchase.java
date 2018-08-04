@@ -3,9 +3,10 @@ package com.figureshop.springmvc.model;
 import com.figureshop.springmvc.dataAccess.entity.ProductEntity;
 import com.figureshop.springmvc.dataAccess.entity.UserEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Purchase {
+public class Purchase implements Serializable {
     private Long id;
     private Long purchaseNumber;
     private Date purchaseDate;

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,9 +34,8 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Translation> searchProductsByName(String searchTerm) {
-        List<TranslationEntity> translationEntities = translationRepository.findByTranslationContaining(searchTerm);
-        return entityMapper.convertTranslationEntityListToModel(translationEntities);
+    public List<Product> getProductsByName(String name) {
+        return entityMapper.convertProductEntityListToModel(productRepository.findByNameContaining(name));
     }
 
     @Override

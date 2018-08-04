@@ -1,5 +1,6 @@
 package com.figureshop.springmvc.controller;
 
+import com.figureshop.springmvc.model.Product;
 import com.figureshop.springmvc.model.Translation;
 import com.figureshop.springmvc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,8 +21,15 @@ public class ProductController {
     private ProductService productService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getProductsList(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+    public String getProductsList(Model model, @RequestParam(required = false) String name) {
+        List<Product> products = new ArrayList<>();
+        if (name == null || StringUtils.isEmpty(name)) {
+            products = productService.getAllProducts();
+        }
+        else  {
+            products = productService.searchProductsByName(name);
+        }
+        model.addAttribute("products", products);
         return "integrated:welcome";
     }
 
@@ -29,18 +38,4 @@ public class ProductController {
         model.addAttribute("product", productService.getProductDetails(id));
         return "integrated:productDetails";
     }
-
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ModelAndView searchProductsByName(@RequestParam(required = false) String name) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (name == null || StringUtils.isEmpty(name)) {
-            modelAndView.setViewName("redirect:/");
-            return modelAndView;
-        }
-        List<Translation> translations = productService.searchProductsByName(name);
-        modelAndView.setViewName("integrated:result");
-        modelAndView.addObject("translations", translations);
-        return modelAndView;
-    }
-
 }
