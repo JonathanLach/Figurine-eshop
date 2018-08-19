@@ -9,36 +9,32 @@
     <div class="col-md-5 col-md-push-2">
         <div id="product-main-img">
             <div class="product-preview">
-                <img height="100" width="50" src="data:image/jpg;base64, ${product.base64Picture}" />
+                <img width="100" height="300" src="data:image/jpg;base64, ${translation.product.base64Picture}" />
             </div>
         </div>
     </div>
     <!-- /Product main img -->
 
     <!-- Product details -->
-    <div class="col-md-5">
+    <div class="col-md-5" id="details-container">
         <div class="product-details">
             <h2 class="product-name">
-                <c:forEach items="${product.translations}" var="translation">
-                <p>Translation: <c:out value="${translation.translation}"/></p>
-                </c:forEach>
+                <p><c:out value="${translation.productName}"/></p>
             </h2>
         <div>
         <div>
-            <h3 class="product-price"><c:out value="${product.price}"/>€</h3>
+            <h3 class="product-price"><c:out value="${translation.product.price}"/>€</h3>
         </div>
-            <p><c:out value="${product.description}"/></p>
-
             <div class="add-to-cart">
                 <div class="qty-label">
                     Qty
                     <div class="input-number">
-                        <input type="number" value="1">
+                        <input type="number" id="qty-add-cart" value="1">
                         <span class="qty-up">+</span>
                         <span class="qty-down">-</span>
                     </div>
                 </div>
-                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i><spring:message code="label.addToCart"/></button>
+                <button class="add-to-cart-btn" onclick="addQuantityOfProductInCart(${translation.product.id})"><i class="fa fa-shopping-cart"></i><spring:message code="label.addToCart"/></button>
             </div>
         </div>
     </div>
@@ -59,7 +55,7 @@
                 <div id="tab1" class="tab-pane fade in active">
                     <div class="row">
                         <div class="col-md-12">
-                            <p><c:out value="${product.description}"/></p>
+                            <p><c:out value="${translation.productDescription}"/></p>
                         </div>
                     </div>
                 </div>

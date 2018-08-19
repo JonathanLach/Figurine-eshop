@@ -11,9 +11,7 @@ import java.util.List;
 public class Product implements Serializable {
     private Long id;
 
-    private List<TranslationEntity> translations;
-
-    private String description;
+    private List<Translation> translations;
 
     private Byte[] picture;
 
@@ -29,14 +27,6 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -45,11 +35,11 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public List<TranslationEntity> getTranslations() {
+    public List<Translation> getTranslations() {
         return translations;
     }
 
-    public void setTranslations(List<TranslationEntity> translations) {
+    public void setTranslations(List<Translation> translations) {
         this.translations = translations;
     }
 

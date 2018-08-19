@@ -14,8 +14,6 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product")
     private List<TranslationEntity> translations;
 
-    private String description;
-
     @Lob
     @Column(nullable = false)
     private Byte[] picture;
@@ -23,23 +21,12 @@ public class ProductEntity {
     @Column(name = "excl_tax_price", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "productBought")
-    private List<PurchaseEntity> purchases;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Byte[] getPicture() {
@@ -66,11 +53,4 @@ public class ProductEntity {
         this.translations = translations;
     }
 
-    public List<PurchaseEntity> getPurchases() {
-        return purchases;
-    }
-
-    public void setPurchases(List<PurchaseEntity> purchases) {
-        this.purchases = purchases;
-    }
 }

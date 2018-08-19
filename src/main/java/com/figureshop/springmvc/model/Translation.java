@@ -5,7 +5,9 @@ import java.io.Serializable;
 public class Translation implements Serializable {
     private Long id;
 
-    private String translation;
+    private String productName;
+
+    private String productDescription;
 
     private Language language;
 
@@ -19,12 +21,12 @@ public class Translation implements Serializable {
         this.id = id;
     }
 
-    public String getTranslation() {
-        return translation;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setTranslation(String translation) {
-        this.translation = translation;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public Language getLanguage() {
@@ -41,5 +43,13 @@ public class Translation implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 }

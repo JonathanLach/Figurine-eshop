@@ -52,10 +52,10 @@
                             <li><a href="/login"><i class="fa fa-user-o"></i> <spring:message code="label.login" /></a></li>
                             <li><a href="/register"><i class="fa fa-user-o"></i> <spring:message code="label.register" /></a></li>
                         </sec:authorize>
-                        <a href="?lang=en">
+                        <a href="?lang=en_gb">
                             <img class="flag" src="/resources/img/england.png" alt="">
                         </a>
-                        <a href="?lang=fr">
+                        <a href="?lang=fr_fr">
                             <img class="flag" src="/resources/img/france.png" alt="">
                         </a>
 					</ul>

@@ -1,9 +1,7 @@
 package com.figureshop.springmvc.controller;
 
-import com.figureshop.springmvc.model.CartInfo;
-import com.figureshop.springmvc.model.CartUpdateInfo;
-import com.figureshop.springmvc.model.Product;
-import com.figureshop.springmvc.model.ProductItem;
+import com.figureshop.springmvc.constants.PricingConstants;
+import com.figureshop.springmvc.model.*;
 import com.figureshop.springmvc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(value = "/cart")
@@ -24,22 +22,24 @@ public class CartController {
     private ProductService productService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model, HttpServletRequest request, HttpSession session) {
+    public String home(Model model, HttpServletRequest request, HttpSession session, Locale locale) {
         HashMap<Long, ProductItem> cart = (HashMap<Long, ProductItem>) session.getAttribute("cart");
         BigDecimal totalPrice = (BigDecimal) session.getAttribute("totalPrice");
+
         if(cart == null) {
             cart = new HashMap<>();
             session.setAttribute("cart", cart);
         }
         if(totalPrice == null ) {
-            totalPrice = new BigDecimal(0);
-        }
-        for(Map.Entry<Long, ProductItem> cartElement : cart.entrySet()) {
-            totalPrice = totalPrice.add(cartElement.getValue().getSubTotal());
+            totalPrice = new BigDecimal(0).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_UP);
         }
         model.addAttribute("cart", cart);
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("language", locale);
         session.setAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("tvaAmount", productService.getVATAmount(totalPrice));
+        totalPrice = productService.getTotalPriceWithTVA(totalPrice);
+        model.addAttribute("totalPriceTVA", totalPrice);
         return "integrated:cart";
     }
 
@@ -52,24 +52,12 @@ public class CartController {
         ProductItem productItem = cart.get(id);
         CartUpdateInfo cartUpdateInfo = new CartUpdateInfo();
         if (productItem != null) {
-            int qtyDifference = productItem.getQuantity() - qty;
-            if(qtyDifference > 0) {
-                BigDecimal valueToSubtract = productItem.getProduct().getPrice().multiply(new BigDecimal(qtyDifference));
-                productItem.setSubTotal(productItem.getSubTotal()
-                        .subtract(valueToSubtract));
-                totalPrice = totalPrice.subtract(valueToSubtract);
-            }
-            else {
-                qtyDifference = Math.abs(qtyDifference);
-                BigDecimal valueToAdd = productItem.getProduct().getPrice().multiply(new BigDecimal(qtyDifference));
-                productItem.setSubTotal(productItem.getSubTotal()
-                        .add(valueToAdd));
-                totalPrice = totalPrice.add(valueToAdd);
-            }
+            totalPrice = productService.updateTotalPrice(productItem, qty, totalPrice);
             productItem.setQuantity(qty);
             cartUpdateInfo.setSubTotal(productItem.getSubTotal());
-            cartUpdateInfo.setTotalPrice(totalPrice);
             session.setAttribute("totalPrice", totalPrice);
+            cartUpdateInfo.setTotalPrice(totalPrice);
+            cartUpdateInfo.setTotalPriceTVA(productService.getTotalPriceWithTVA(totalPrice));
         }
         return cartUpdateInfo;
     }
@@ -93,7 +81,7 @@ public class CartController {
         if(cart != null) {
             ProductItem productItem = cart.get(id);
             if(productItem != null) {
-                totalPrice = totalPrice.subtract(productItem.getSubTotal());
+                totalPrice = productService.updateTotalPriceDown(totalPrice, productItem.getSubTotal());
                 cart.remove(id);
             }
         }
@@ -103,8 +91,9 @@ public class CartController {
 
         CartInfo cartInfo = new CartInfo();
         cartInfo.setSize(cart.size());
-        cartInfo.setTotalPrice(totalPrice);
         session.setAttribute("totalPrice", totalPrice);
+        cartInfo.setTotalPrice(totalPrice);
+        cartInfo.setTotalPriceTVA(productService.getTotalPriceWithTVA(totalPrice));
         return cartInfo;
     }
 
@@ -112,23 +101,31 @@ public class CartController {
     @ResponseBody
     public Integer addToCart(@PathVariable Long id,
                              @RequestParam(name = "qty",required = false, defaultValue = "1") int qty,
-                             HttpServletRequest request, HttpSession session) {
+                             HttpServletRequest request, HttpSession session, Locale locale) {
         HashMap<Long, ProductItem> cart = (HashMap<Long,ProductItem>)session.getAttribute("cart");
+        BigDecimal totalPrice = (BigDecimal) session.getAttribute("totalPrice");
         if(cart == null) {
             cart = new HashMap<>();
         }
+        if(totalPrice == null ) {
+            totalPrice = new BigDecimal(0).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_UP);
+        }
         ProductItem item = cart.get(id);
+        BigDecimal formerSubTotal = new BigDecimal(0.00);
         if(item == null){
             item = new ProductItem();
-            Product product = productService.getProductDetails(id);
-            item.setProduct(product);
+            Translation translation = productService.getProductDetails(id, locale.getLanguage());
+            item.setTranslation(translation);
             item.setQuantity(qty);
-            item.setSubTotal(product.getPrice().multiply(new BigDecimal(qty)));
+            item.setSubTotal(productService.getSubTotal(item.getTranslation().getProduct().getPrice(), qty));
         } else {
             item.setQuantity(item.getQuantity() + qty);
-            item.setSubTotal(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
+            formerSubTotal = item.getSubTotal();
+            item.setSubTotal(productService.getSubTotal(item.getTranslation().getProduct().getPrice(), item.getQuantity()));
         }
+        totalPrice = productService.updateTotalPriceUp(totalPrice, item.getSubTotal(), formerSubTotal);
         cart.put(id, item);
+        session.setAttribute("totalPrice", totalPrice);
         session.setAttribute("cart", cart);
         return cart.size();
     }

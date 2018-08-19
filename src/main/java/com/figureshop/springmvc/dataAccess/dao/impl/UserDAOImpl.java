@@ -30,4 +30,15 @@ public class UserDAOImpl implements UserDAO {
         userRepository.save(userToSave);
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        UserEntity userFound = userRepository.findByUsername(username);
+        return entityMapper.convertUserEntityToModel(userFound);
+    }
+
+    @Override
+    public User getUserByMail(String mail) {
+        UserEntity userFound = userRepository.findByMail(mail);
+        return entityMapper.convertUserEntityToModel(userFound);
+    }
 }

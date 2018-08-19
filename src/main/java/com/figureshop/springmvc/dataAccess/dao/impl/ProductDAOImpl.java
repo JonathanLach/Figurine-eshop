@@ -29,17 +29,17 @@ public class ProductDAOImpl implements ProductDAO {
     private EntityMapper entityMapper;
 
     @Override
-    public List<Product> getAllProducts() {
-        return entityMapper.convertProductEntityListToModel(productRepository.findAll());
+    public List<Translation> getAllProducts(String lang) {
+        return entityMapper.convertTranslationEntityListToModel(translationRepository.findAllByLanguage(lang));
     }
 
     @Override
-    public List<Product> getProductsByName(String name) {
-        return entityMapper.convertProductEntityListToModel(productRepository.findByNameContaining(name));
+    public List<Translation> getProductsByName(String name, String lang) {
+        return entityMapper.convertTranslationEntityListToModel(translationRepository.findByNameContaining(name, lang));
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return entityMapper.convertProductEntityToModel(productRepository.findOne(id));
+    public Translation getProductById(Long id, String lang) {
+        return entityMapper.convertTranslationEntityToModel(translationRepository.findProductDetails(id, lang));
     }
 }

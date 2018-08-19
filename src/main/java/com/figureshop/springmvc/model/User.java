@@ -28,6 +28,11 @@ public class User implements Serializable {
     @NotNull
     @NotBlank
     @Size(min = 5, max = 12)
+    private String passwordConfirmation;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 5, max = 12)
     private String password;
 
     @NotNull
@@ -45,7 +50,7 @@ public class User implements Serializable {
 
     private Date registerDate = new Date();
 
-    @Pattern(regexp = RegexConstants.ONLY_DIGITS)
+    @Pattern(regexp = RegexConstants.ONLY_DIGITS, message = "Pattern.user.phoneNumber")
     @NotBlank
     @NotNull
     private String phoneNumber;
@@ -185,4 +190,19 @@ public class User implements Serializable {
         return username;
     }
 
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public Boolean getSubNewLetters() {
+        return isSubNewLetters;
+    }
+
+    public void setSubNewLetters(Boolean subNewLetters) {
+        isSubNewLetters = subNewLetters;
+    }
 }

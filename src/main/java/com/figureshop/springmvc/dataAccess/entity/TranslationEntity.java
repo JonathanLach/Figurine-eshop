@@ -10,7 +10,10 @@ public class TranslationEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String translation;
+    private String productName;
+
+    @Column(nullable = false)
+    private String productDescription;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -28,12 +31,20 @@ public class TranslationEntity {
         this.id = id;
     }
 
-    public String getTranslation() {
-        return translation;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setTranslation(String translation) {
-        this.translation = translation;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     public LanguageEntity getLanguage() {

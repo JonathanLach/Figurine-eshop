@@ -14,6 +14,4 @@ import java.util.List;
 @Transactional
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
-    @Query("SELECT p FROM TranslationEntity t INNER JOIN t.product p WHERE t.translation LIKE CONCAT('%', :searchTerm,'%')")
-    List<ProductEntity> findByNameContaining(@Param("searchTerm") String name);
 }

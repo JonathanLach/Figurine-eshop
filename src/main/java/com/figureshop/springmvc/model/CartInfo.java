@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class CartInfo implements Serializable {
     private int size;
     private BigDecimal totalPrice;
+    private BigDecimal totalPriceTVA;
 
     public int getSize() {
         return size;
@@ -21,5 +22,13 @@ public class CartInfo implements Serializable {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public BigDecimal getTotalPriceTVA() {
+        return totalPriceTVA;
+    }
+
+    public void setTotalPriceTVA(BigDecimal totalPriceTVA) {
+        this.totalPriceTVA = totalPriceTVA;
     }
 }

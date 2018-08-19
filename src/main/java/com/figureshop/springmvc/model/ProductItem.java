@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public class ProductItem implements Serializable {
     private int quantity;
-    private Product product;
+    private Translation translation;
     private BigDecimal subTotal;
 
     public int getQuantity() {
@@ -16,12 +16,12 @@ public class ProductItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public Translation getTranslation() {
+        return translation;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setTranslation(Translation translation) {
+        this.translation = translation;
     }
 
     public BigDecimal getSubTotal() {

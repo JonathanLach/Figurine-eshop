@@ -1,7 +1,9 @@
 package com.figureshop.springmvc.dataAccess.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "purchase")
@@ -11,16 +13,11 @@ public class PurchaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Long purchaseNumber;
-
-    @Column(nullable = false)
     private Date purchaseDate = new Date();
 
-    @Column(nullable = false)
-    private Integer quantity;
+    @OneToMany(mappedBy = "purchase")
+    private List<ProductItemEntity> productItems = new ArrayList<>();
 
-    @ManyToOne
-    private ProductEntity productBought;
     @ManyToOne
     private UserEntity buyer;
 
@@ -32,14 +29,6 @@ public class PurchaseEntity {
         this.id = id;
     }
 
-    public Long getPurchaseNumber() {
-        return purchaseNumber;
-    }
-
-    public void setPurchaseNumber(Long purchaseNumber) {
-        this.purchaseNumber = purchaseNumber;
-    }
-
     public Date getPurchaseDate() {
         return purchaseDate;
     }
@@ -48,20 +37,12 @@ public class PurchaseEntity {
         this.purchaseDate = purchaseDate;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public List<ProductItemEntity> getProductItems() {
+        return productItems;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public ProductEntity getProductBought() {
-        return productBought;
-    }
-
-    public void setProductBought(ProductEntity productBought) {
-        this.productBought = productBought;
+    public void setProductItems(List<ProductItemEntity> productItems) {
+        this.productItems = productItems;
     }
 
     public UserEntity getBuyer() {

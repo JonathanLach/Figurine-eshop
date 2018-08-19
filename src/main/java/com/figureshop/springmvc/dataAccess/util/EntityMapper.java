@@ -27,6 +27,7 @@ public class EntityMapper {
         classMapBidirectional(PurchaseEntity.class, Purchase.class);
         classMapBidirectional(LanguageEntity.class, Language.class);
         classMapBidirectional(ProductEntity.class, Product.class);
+        classMapBidirectional(ProductItemEntity.class, ProductItem.class);
     }
 
     private void classMapBidirectional(Class<?> c1, Class<?> c2) {
@@ -43,7 +44,13 @@ public class EntityMapper {
     }
 
     public Translation convertTranslationEntityToModel(TranslationEntity translation) {
-        return mapper.map(translation, Translation.class);
+        Translation mappedTranslation =  mapper.map(translation, Translation.class);
+        Product p = mappedTranslation.getProduct();
+        if (p.getPicture() != null) {
+            String base64picture = new BASE64Encoder().encode(ArrayUtils.toPrimitive(p.getPicture()));
+            p.setBase64Picture(base64picture);
+        }
+        return mappedTranslation;
     }
 
     public TranslationEntity convertTranslationModelToEntity(Translation translation) {
@@ -51,7 +58,15 @@ public class EntityMapper {
     }
 
     public List<Translation> convertTranslationEntityListToModel(List<TranslationEntity> translations) {
-        return mapper.mapAsList(translations, Translation.class);
+        List<Translation> mappedTranslations = mapper.mapAsList(translations, Translation.class);
+        mappedTranslations.forEach(t -> {
+            Product p = t.getProduct();
+            if (p.getPicture() != null) {
+                String base64picture = new BASE64Encoder().encode(ArrayUtils.toPrimitive(p.getPicture()));
+                p.setBase64Picture(base64picture);
+            }
+        });
+        return mappedTranslations;
     }
 
     public Purchase convertPurchaseEntityToModel(PurchaseEntity purchase) {
@@ -92,5 +107,13 @@ public class EntityMapper {
 
     public LanguageEntity convertLanguageModelToEntity(Language language) {
         return mapper.map(language, LanguageEntity.class);
+    }
+
+    public ProductItem convertProductItemEntityToModel(ProductItemEntity productItemEntity) {
+        return mapper.map(productItemEntity, ProductItem.class);
+    }
+
+    public ProductItemEntity convertProductItemModelToEntity(ProductItem productItem) {
+        return mapper.map(productItem, ProductItemEntity.class);
     }
 }

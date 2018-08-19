@@ -10,7 +10,15 @@ $( document ).ready(function() {
 
 function addProductToCart(productId){
     $.post( "/cart/add/"+productId, function( data ) {
-      $( "#nbInCart" ).html( data );
+          $( "#nbInCart" ).html( data );
+           window.scrollTo(0, 0);
+    });
+}
+
+function addQuantityOfProductInCart(productId) {
+    $.post( "/cart/add/"+productId+"?qty=" + $("#qty-add-cart").val(), function(data) {
+          $( "#nbInCart" ).html(data);
+           window.scrollTo(0, 0);
     });
 }
 
@@ -20,6 +28,7 @@ function updateCart(productId) {
         type: 'PUT',
         success: function(data) {
             $( "#cartTotalPrice" ).html(data.totalPrice + "€");
+            $( "#cartTotalPriceTVA" ).html(data.totalPriceTVA + "€");
             $( "#subTotal-" + productId ).html(data.subTotal + "€");
         }
     });
@@ -33,6 +42,7 @@ function deleteProductFromCart(productId) {
             $("#product-" + productId).remove();
             $( "#nbInCart").html(data.size);
             $( "#cartTotalPrice" ).html(data.totalPrice + "€");
+            $( "#cartTotalPriceTVA" ).html(data.totalPriceTVA + "€");
         }
     });
 }

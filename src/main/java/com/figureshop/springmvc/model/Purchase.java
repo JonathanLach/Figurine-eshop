@@ -1,17 +1,18 @@
 package com.figureshop.springmvc.model;
 
 import com.figureshop.springmvc.dataAccess.entity.ProductEntity;
+import com.figureshop.springmvc.dataAccess.entity.ProductItemEntity;
 import com.figureshop.springmvc.dataAccess.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Purchase implements Serializable {
     private Long id;
-    private Long purchaseNumber;
     private Date purchaseDate;
-    private Integer quantity;
-    private Product productBought;
+    private List<ProductItem> productItems = new ArrayList<>();
     private User buyer;
 
     public Long getId() {
@@ -22,14 +23,6 @@ public class Purchase implements Serializable {
         this.id = id;
     }
 
-    public Long getPurchaseNumber() {
-        return purchaseNumber;
-    }
-
-    public void setPurchaseNumber(Long purchaseNumber) {
-        this.purchaseNumber = purchaseNumber;
-    }
-
     public Date getPurchaseDate() {
         return purchaseDate;
     }
@@ -38,20 +31,12 @@ public class Purchase implements Serializable {
         this.purchaseDate = purchaseDate;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public List<ProductItem> getProductItems() {
+        return productItems;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Product getProductBought() {
-        return productBought;
-    }
-
-    public void setProductBought(Product productBought) {
-        this.productBought = productBought;
+    public void setProductItems(List<ProductItem> productItems) {
+        this.productItems = productItems;
     }
 
     public User getBuyer() {
