@@ -54,7 +54,11 @@ public class ProductServiceImplTest {
 
         assertTrue(newTotalPrice.compareTo(productService.updateTotalPrice(productItem, qty, totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP)) == 0);
 
+        qty = 19;
 
+        newTotalPrice  = new BigDecimal(201.02).setScale(2, RoundingMode.HALF_UP);
+
+        assertTrue(newTotalPrice.compareTo(productService.updateTotalPrice(productItem, qty, totalPrice).setScale(2, BigDecimal.ROUND_HALF_UP)) == 0);
     }
 
     @Test
@@ -67,5 +71,10 @@ public class ProductServiceImplTest {
 
     @Test
     public void getSubTotal() {
+
+        BigDecimal price = new BigDecimal(20.98);
+        int qty = 15;
+        BigDecimal subTotal = new BigDecimal(314.7).setScale(2, BigDecimal.ROUND_HALF_UP);
+        assertTrue(subTotal.compareTo(productService.getSubTotal(price, qty).setScale(2, BigDecimal.ROUND_HALF_UP)) == 0);
     }
 }
