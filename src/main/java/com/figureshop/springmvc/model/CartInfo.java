@@ -7,6 +7,15 @@ public class CartInfo implements Serializable {
     private int size;
     private BigDecimal totalPrice;
     private BigDecimal totalPriceTVA;
+    private String paypalUpdate;
+
+    public String getPaypalUpdate() {
+        return paypalUpdate;
+    }
+
+    public void setPaypalUpdate(String paypalUpdate) {
+        this.paypalUpdate = paypalUpdate;
+    }
 
     public int getSize() {
         return size;

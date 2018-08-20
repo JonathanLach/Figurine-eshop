@@ -46,6 +46,7 @@
 				<div class="container">
 					<ul class="header-links pull-right">
                         <sec:authorize access="isAuthenticated()">
+                            <li><a><spring:message code="label.welcome" /> <sec:authentication property="principal.username" /> !</a></li>
                             <li><a href="/logout"><i class="fa fa-user-o"></i><spring:message code="label.logout" /></a></li>
                         </sec:authorize>
                         <sec:authorize access="isAnonymous()">
@@ -134,6 +135,7 @@
 					<ul class="main-nav nav navbar-nav">
 						<li><a href="/"><spring:message code="label.shop"/></a></li>
 						<li><a href="/cart"><spring:message code="label.cart"/></a></li>
+						<li><a href="/info"><spring:message code="label.info"/></a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -169,6 +171,9 @@
 							<div class="footer">
 								<h3 class="footer-title"><spring:message code="label.aboutUs"/></h3>
 								<ul class="footer-links">
+                                    <li>Imagination Dream</li>
+                                    <li>42 Rue du marais 6000 Charleroi</li>
+                                    <li>Jonathan Lachapelle</i>
 									<li><i class="fa fa-phone"></i>+32476/06.46.13</li>
 									<li><i class="fa fa-envelope-o"></i>infoimaginationdream@contact.com</li>
 								</ul>
@@ -181,6 +186,7 @@
 							<div class="footer">
 								<h3 class="footer-title"><spring:message code="label.service"/></h3>
 								<ul class="footer-links">
+								    <li><a href="/"><spring:message code="label.products"/>
 									<li><a href="/cart"><spring:message code="label.viewCart"/></a></li>
 								</ul>
 							</div>

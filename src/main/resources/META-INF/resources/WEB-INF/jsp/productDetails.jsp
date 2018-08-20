@@ -9,7 +9,7 @@
     <div class="col-md-5 col-md-push-2">
         <div id="product-main-img">
             <div class="product-preview">
-                <img width="100" height="300" src="data:image/jpg;base64, ${translation.product.base64Picture}" />
+                <img width="150" height="300" src="data:image/jpg;base64, ${translation.product.base64Picture}" />
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
         </div>
             <div class="add-to-cart">
                 <div class="qty-label">
-                    Qty
+                    <spring:message code="label.qty"/>
                     <div class="input-number">
                         <input type="number" id="qty-add-cart" value="1">
                         <span class="qty-up">+</span>

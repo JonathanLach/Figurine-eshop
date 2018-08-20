@@ -2,8 +2,10 @@ package com.figureshop.springmvc.model;
 
 import com.figureshop.springmvc.dataAccess.entity.ProductEntity;
 import com.figureshop.springmvc.dataAccess.entity.ProductItemEntity;
+import com.figureshop.springmvc.dataAccess.entity.PurchaseEntity;
 import com.figureshop.springmvc.dataAccess.entity.UserEntity;
 
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -37,7 +38,7 @@ public class CartController {
         model.addAttribute("language", locale);
         session.setAttribute("totalPrice", totalPrice);
         model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("tvaAmount", productService.getVATAmount(totalPrice));
+        model.addAttribute("tvaAmount", productService.getVATAmount(totalPrice).setScale(PricingConstants.PRICE_SCALE, RoundingMode.HALF_UP));
         totalPrice = productService.getTotalPriceWithTVA(totalPrice);
         model.addAttribute("totalPriceTVA", totalPrice);
         return "integrated:cart";
@@ -111,7 +112,7 @@ public class CartController {
             totalPrice = new BigDecimal(0).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_UP);
         }
         ProductItem item = cart.get(id);
-        BigDecimal formerSubTotal = new BigDecimal(0.00);
+        BigDecimal formerSubTotal = BigDecimal.ZERO.setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP);
         if(item == null){
             item = new ProductItem();
             Translation translation = productService.getProductDetails(id, locale.getLanguage());

@@ -1588,7 +1588,7 @@ textarea.input {
 \*----------------------------*/
 
 #details-container {
-    padding-left:10%;
+    margin-left:15%;
 }
 
 .product-details .product-name {
@@ -2365,4 +2365,20 @@ textarea.input {
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity:1 ;}
+}
+
+/* Error message */
+
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+/* Info Company */
+
+#info-company {
+    margin:auto;
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +48,9 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false)
     private String streetNumber;
+
+    @Column
+    private String bte;
 
     @Column(nullable = false)
     private String streetName;
@@ -271,5 +275,13 @@ public class UserEntity implements UserDetails {
 
     public void setPurchases(List<PurchaseEntity> purchases) {
         this.purchases = purchases;
+    }
+
+    public String getBte() {
+        return bte;
+    }
+
+    public void setBte(String bte) {
+        this.bte = bte;
     }
 }

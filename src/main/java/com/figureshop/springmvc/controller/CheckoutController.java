@@ -1,5 +1,6 @@
 package com.figureshop.springmvc.controller;
 
+import com.figureshop.springmvc.constants.PricingConstants;
 import com.figureshop.springmvc.model.Product;
 import com.figureshop.springmvc.model.ProductItem;
 import com.figureshop.springmvc.model.Purchase;
@@ -34,13 +35,14 @@ public class CheckoutController {
         if (cart != null) {
             cart.forEach((k, v) -> {
                 purchase.getProductItems().add(v);
+                v.setPurchase(purchase);
             });
             purchase.setPurchaseDate(new Date());
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
             purchaseService.savePurchase(purchase, username);
             cart = new HashMap<>();
-            totalPrice = new BigDecimal(0.00);
+            totalPrice = BigDecimal.ZERO.setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP);
             session.setAttribute("totalPrice", totalPrice);
             session.setAttribute("cart",cart);
         }

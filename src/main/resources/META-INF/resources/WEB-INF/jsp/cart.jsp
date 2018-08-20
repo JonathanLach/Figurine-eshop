@@ -9,10 +9,10 @@
     <tr class="table-head">
         <th class="delete-btn"></th>
         <th class="column-1"></th>
-        <th class="column-2">Product</th>
-        <th class="column-3">Price</th>
-        <th class="column-4 p-l-70">Quantity</th>
-        <th class="column-5">Total</th>
+        <th class="column-2"><spring:message code="label.product"/></th>
+        <th class="column-3"><spring:message code="label.price"/></th>
+        <th class="column-4 p-l-70"><spring:message code="label.quantity"/></th>
+        <th class="column-5"><spring:message code="label.total"/></th>
     </tr>
 
     <c:forEach items="${cart}" var="cartElement">
@@ -45,7 +45,7 @@
             <td class="column-2"></td>
             <td class="column-3"></td>
             <td class="column-4"></td>
-            <td class="column-5">Total: <div id="cartTotalPrice"><c:out value="${totalPrice}"/>€</div></td>
+            <td class="column-5"><spring:message code="label.total"/>: <div id="cartTotalPrice"><c:out value="${totalPrice}"/>€</div></td>
 </tr>
 
 <tr class="table-row" id="product-${cartElement.value.product.id}">
@@ -53,7 +53,7 @@
             <td class="column-2"></td>
             <td class="column-3"></td>
             <td class="column-4"></td>
-            <td class="column-5">Total TVA: <div id="cartTotalPriceTVA"><c:out value="${totalPriceTVA}"/>€</div>
+            <td class="column-5"><spring:message code="label.totalWithVat"/>: <div id="cartTotalPriceTVA"><c:out value="${totalPriceTVA}"/>€</div>
 </div></td>
 </tr>
 
@@ -67,6 +67,7 @@
         </sec:authorize>
 
         <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+        <div id="paypalScript">
         <script>
             paypal.Button.render({
               // Configure environment
@@ -121,13 +122,15 @@
                 return actions.payment.execute()
                   .then(function () {
                     // Show a confirmation message to the buyer
-                    $.post( "/checkout", function(  ) {
-                        window.alert('Thank you for your purchase!');
-                    });
+                    $.post( "/checkout", function(data) {
+                        window.alert('<spring:message code="message.thanksForPurchase"/>');
+                        window.location.href = "/";
+                        });
                   });
               }
             }, '#paypal-button');
         </script>
+        </div>
     </div>
 </div>
 

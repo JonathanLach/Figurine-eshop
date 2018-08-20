@@ -50,7 +50,8 @@ public class User implements Serializable {
 
     private Date registerDate = new Date();
 
-    @Pattern(regexp = RegexConstants.ONLY_DIGITS, message = "Pattern.user.phoneNumber")
+    @Pattern(regexp = RegexConstants.PHONE_NUMBER, message = "Pattern.user.phoneNumber")
+    @Size(min = 10, max = 14)
     @NotBlank
     @NotNull
     private String phoneNumber;
@@ -68,7 +69,11 @@ public class User implements Serializable {
 
     @NotBlank
     @NotNull
+    @Pattern(regexp = RegexConstants.ONLY_POSITIVE_NUMBERS, message = "Pattern.user.postalCode")
     private String postalCode;
+
+    @Size(max = 3)
+    private String bte;
 
     @NotBlank
     @NotNull
@@ -204,5 +209,13 @@ public class User implements Serializable {
 
     public void setSubNewLetters(Boolean subNewLetters) {
         isSubNewLetters = subNewLetters;
+    }
+
+    public String getBte() {
+        return bte;
+    }
+
+    public void setBte(String bte) {
+        this.bte = bte;
     }
 }

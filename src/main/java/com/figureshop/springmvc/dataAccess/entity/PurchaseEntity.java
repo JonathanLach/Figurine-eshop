@@ -15,7 +15,7 @@ public class PurchaseEntity {
     @Column(nullable = false)
     private Date purchaseDate = new Date();
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
     private List<ProductItemEntity> productItems = new ArrayList<>();
 
     @ManyToOne

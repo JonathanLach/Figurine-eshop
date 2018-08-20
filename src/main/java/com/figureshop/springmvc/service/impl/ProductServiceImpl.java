@@ -9,12 +9,14 @@ import com.figureshop.springmvc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductDAO productDAO;
@@ -36,14 +38,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BigDecimal getTotalPriceWithTVA(BigDecimal totalExclTVA) {
-        BigDecimal newPrice = totalExclTVA.multiply(new BigDecimal(1).add(new BigDecimal(PricingConstants.TVA_RATE)));
-        newPrice = newPrice.setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_UP);
+        totalExclTVA = totalExclTVA.setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP);
+        BigDecimal newPrice = totalExclTVA.multiply(new BigDecimal(1).add(new BigDecimal(PricingConstants.TVA_RATE).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP)));
+        newPrice = newPrice.setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP);
         return newPrice;
     }
 
     @Override
     public BigDecimal getVATAmount(BigDecimal totalPrice) {
-        return totalPrice.multiply(new BigDecimal(PricingConstants.TVA_RATE));
+        return totalPrice.multiply(new BigDecimal(PricingConstants.TVA_RATE).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP)).setScale(PricingConstants.PRICE_SCALE, BigDecimal.ROUND_HALF_UP);
     }
 
     @Override

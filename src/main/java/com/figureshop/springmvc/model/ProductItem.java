@@ -7,6 +7,15 @@ public class ProductItem implements Serializable {
     private int quantity;
     private Translation translation;
     private BigDecimal subTotal;
+    private Purchase purchase;
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
 
     public int getQuantity() {
         return quantity;

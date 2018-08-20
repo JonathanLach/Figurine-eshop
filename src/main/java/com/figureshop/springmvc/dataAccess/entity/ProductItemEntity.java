@@ -17,8 +17,9 @@ public class ProductItemEntity {
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private Translation translation;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private TranslationEntity translation;
 
     @Column(nullable = false)
     private BigDecimal subTotal;
@@ -50,11 +51,11 @@ public class ProductItemEntity {
         this.quantity = quantity;
     }
 
-    public Translation getTranslation() {
+    public TranslationEntity getTranslation() {
         return translation;
     }
 
-    public void setTranslation(Translation translation) {
+    public void setTranslation(TranslationEntity translation) {
         this.translation = translation;
     }
 

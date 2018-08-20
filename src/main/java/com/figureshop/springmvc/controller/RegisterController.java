@@ -46,6 +46,7 @@ public class RegisterController {
         }
         try {
             userService.registerUser(user);
+            return "integrated:login";
         }
         catch (UserAlreadyExistsException e) {
             FieldError fieldError = new FieldError("user", "username", "Username already exists");
@@ -58,6 +59,5 @@ public class RegisterController {
             errors.addError(fieldError);
             return "integrated:register";
         }
-        return "integrated:welcome";
     }
 }

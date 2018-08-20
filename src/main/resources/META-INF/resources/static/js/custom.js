@@ -30,6 +30,7 @@ function updateCart(productId) {
             $( "#cartTotalPrice" ).html(data.totalPrice + "€");
             $( "#cartTotalPriceTVA" ).html(data.totalPriceTVA + "€");
             $( "#subTotal-" + productId ).html(data.subTotal + "€");
+            document.location.reload();
         }
     });
 }
@@ -43,6 +44,7 @@ function deleteProductFromCart(productId) {
             $( "#nbInCart").html(data.size);
             $( "#cartTotalPrice" ).html(data.totalPrice + "€");
             $( "#cartTotalPriceTVA" ).html(data.totalPriceTVA + "€");
+            document.location.reload();
         }
     });
 }
